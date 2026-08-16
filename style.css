@@ -1,0 +1,27 @@
+body{
+    background:black;
+    color:white;
+    font-family:Arial;
+}
+
+h1{
+    color:lime;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th, td{
+    border:1px solid white;
+    padding:10px;
+    text-align:center;
+}
+
+button{
+    padding:10px 20px;
+    background:lime;
+    border:none;
+    cursor:pointer;
+}

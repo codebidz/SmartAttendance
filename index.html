@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Smart Attendance Camera</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: #fff;
+        }
+
+        /* Navigation bar */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            background-color: rgba(0,0,0,0.6);
+        }
+        nav .logo {
+            font-weight: bold;
+            font-size: 20px;
+            color: #00aaff;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        nav ul li a:hover {
+            color: #00aaff;
+        }
+
+        /* Hero section */
+        .hero {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 60px;
+        }
+
+        /* Camera on left */
+        .hero-video {
+            background-color: #111;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            margin-right: 40px;
+        }
+        .hero-video img {
+            border-radius: 10px;
+            width: 640px;
+            height: 480px;
+        }
+
+        /* Text/buttons on right */
+        .hero-text {
+            max-width: 40%;
+            text-align: center;
+        }
+        .hero-text h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        .hero-text p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            color: #ccc;
+        }
+        .hero-text .buttons a {
+            display: inline-block;
+            margin: 10px;
+            padding: 12px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .btn-primary {
+            background-color: #00aaff;
+            color: #fff;
+        }
+        .btn-secondary {
+            background-color: #444;
+            color: #fff;
+        }
+        .btn-primary:hover {
+            background-color: #0088cc;
+        }
+        .btn-secondary:hover {
+            background-color: #666;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">Smart Attendance</div>
+        <ul>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Features</a></li>
+            <li><a href="#">Pricing</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="/admin">Admin</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <!-- Camera feed on left -->
+        <div class="hero-video">
+            <img src="/video" alt="Live Camera Feed">
+        </div>
+
+        <!-- Text/buttons on right -->
+        <div class="hero-text">
+            <h1>Welcome.</h1>
+            <p>Track attendance with live face recognition. Simple, fast, and reliable.</p>
+            <div class="buttons">
+                <a href="/admin" class="btn-primary">View Attendance</a>
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>
