@@ -1,0 +1,37 @@
+The overall structure of the website for Smart Attendance camera through cctv
+attendance/
+│
+├── app.py
+├── DataSet/
+│
+├── templates/
+│   ├── index.html
+│   ├── admin.html
+│   └── absent.html
+
+
+This is the structure of the frontend and backend of the website for Smart Attendance camera through cctv 
+
+
+attendance/
+│
+├── app.py
+│
+├── templates/
+│   ├── admin.html
+│   ├── index.html
+│   └── absent.html
+│
+├── static/
+│   └── style.css
+
+
+
+This is the structure of the data set. Which contain the image of student for scaning the face for Smart Attendance 
+
+DataSet/
+   └── StudentName/
+         └── RollNo/
+               ├── image1.jpg
+               ├── image2.jpg
+               └── ...
