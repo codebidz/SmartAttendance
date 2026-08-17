@@ -31,7 +31,8 @@ camera_cap = get_camera_source()
 # ============================
 # Dataset Embeddings
 # ============================
-DATASET_PATH = "dataset"
+#DATASET_PATH = "dataset"
+DATASET_PATH = os.path.join(BASE_DIR, "DataSet")
 known_embeddings = []
 known_face_names = []
 known_face_rollnos = []
@@ -111,7 +112,7 @@ def mark_attendance(name, rollno):
 # ============================
 # Camera Streaming with RetinaFace
 # ============================
-def gen_frames():
+'''def gen_frames():
     while True:
         success, frame = camera_cap.read()
         if not success:
@@ -154,7 +155,121 @@ def gen_frames():
         ret, buffer = cv2.imencode(".jpg", frame)
         frame = buffer.tobytes()
         yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')'''
+
+
+def gen_frames():
+    while True:
+        success, frame = camera_cap.read()
+
+        if not success:
+            break
+
+        try:
+            # Detect faces using the recommended DeepFace function
+            faces = DeepFace.extract_faces(
+                img_path=frame,
+                detector_backend="retinaface",
+                enforce_detection=False,
+                align=True
+            )
+
+            if faces:
+
+                for face_data in faces:
+
+                    face_img = face_data["face"]
+
+                    # Convert float image to uint8
+                    face_img = (face_img * 255).astype(np.uint8)
+
+                    # Generate embedding for detected face
+                    emb_data = DeepFace.represent(
+                        img_path=face_img,
+                        model_name="ArcFace",
+                        detector_backend="skip",
+                        enforce_detection=False
+                    )
+
+                    if emb_data:
+
+                        emb = np.array(
+                            emb_data[0]["embedding"]
+                        )
+
+                        similarities = []
+
+                        for known_emb in known_embeddings:
+
+                            similarity = np.dot(
+                                emb,
+                                known_emb
+                            ) / (
+                                np.linalg.norm(emb) *
+                                np.linalg.norm(known_emb)
+                            )
+
+                            similarities.append(similarity)
+
+                        if similarities:
+
+                            best_idx = np.argmax(similarities)
+                            best_similarity = similarities[best_idx]
+
+                            print(
+                                f"Best similarity: {best_similarity:.3f}"
+                            )
+
+                            if best_similarity > 0.40:
+
+                                name = known_face_names[best_idx]
+                                rollno = known_face_rollnos[best_idx]
+
+                                mark_attendance(
+                                    name,
+                                    rollno
+                                )
+
+                                cv2.putText(
+                                    frame,
+                                    f"{name} ({rollno})",
+                                    (50, 50),
+                                    cv2.FONT_HERSHEY_SIMPLEX,
+                                    1,
+                                    (0, 255, 0),
+                                    2
+                                )
+
+                            else:
+
+                                cv2.putText(
+                                    frame,
+                                    "Unknown",
+                                    (50, 50),
+                                    cv2.FONT_HERSHEY_SIMPLEX,
+                                    1,
+                                    (0, 0, 255),
+                                    2
+                                )
+
+        except Exception as e:
+
+            print("[ERROR]", e)
+
+        ret, buffer = cv2.imencode(
+            ".jpg",
+            frame
+        )
+
+        frame = buffer.tobytes()
+
+        yield (
+            b'--frame\r\n'
+            b'Content-Type: image/jpeg\r\n\r\n'
+            + frame +
+            b'\r\n'
+        )
+
 
 # ============================
 # Flask Routes
